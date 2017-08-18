@@ -1,83 +1,57 @@
 class RomanNumerals
-  #constant, maps all known number => symbol
-  TO_GLYPH = {
+  def get_digits(num)
+    result = []
+    if num < 10
+      digit = num % 10
+      result = [digit] + result
+    else
+      digit = num % 10
+      num = num / 10
+      result =  get_digits(num) + [digit]
+    end
+    result
+  end
+
+  GLYPHS = {
     1 => 'I',
-    9 => 'IX',
     5 => 'V',
     10 => 'X',
-    50 => 'L'
+    50 => 'L',
+    100 => 'C',
+    500 => 'D',
+    1000 => 'M'
   }
 
-  WELL_KNOWN_SYMBOLS = [1, 5, 9, 10, 50]
-
-  def convert(number)
-
+  def convert(num)
     result = ''
+    return GLYPHS[num] unless GLYPHS[num].nil?
+    digits = get_digits(num)
 
-    #find smallest WKS larger than number
-    if number > 1
-      smallest = WELL_KNOWN_SYMBOLS.find do |num|
-        num > number
+    if digits.length > 1
+    digits.reverse!
+    end
+
+    digits.each_with_index.map do |d, i|
+      place = 10 ** i
+
+      if d < 4
+        result = GLYPHS[place] * d + result
       end
 
-      # find largest WKS smaller than number
-      largest_index = WELL_KNOWN_SYMBOLS.find_index do |num|
-        num > number
+      if d == 4 or d == 9
+        val = (d + 1) * place
+        result = GLYPHS[place] + GLYPHS[val] + result
       end
 
-      largest_index = largest_index - 1
-
-      # find the diff between number and largest
-      largest =  WELL_KNOWN_SYMBOLS[largest_index]
-      rem  = smallest - number
-
-      # if the difference is smaller than the largest,
-      # go <largest><smallest>
-      if rem > 0 and rem <= largest
-        result = result + TO_GLYPH[largest] + TO_GLYPH[smallest]
+      if d > 4 and d < 9
+        val = d - 5
+        five_num = 5 * place
+        result = GLYPHS[five_num] + GLYPHS[place] * val + result
       end
 
-      if rem < largest
-        number = rem
-      end
-
-    end
-
-    print 'Smallest '
-    puts smallest
-    print 'Largest '
-    puts largest
-    print 'Rem'
-    puts rem
-
-    if number > 50
-      result = result + TO_GLYPH[50]
-      number  = number - 50
-    end
-
-    if number > 10 and number < 50
-      times = number / 10
-      rem = number % 10
-      result = result + TO_GLYPH[10] * times
-      number = rem
-    end
-
-    if WELL_KNOWN_SYMBOLS.include?(number)
-      result = result + TO_GLYPH[number]
-    end
-
-
-
-
-    if number > 5 and number < 9
-      result = result + TO_GLYPH[5]
-      number = number - 5
-    end
-
-    if number < 4
-      result =  result + TO_GLYPH[1] * number
     end
 
     result
   end
+
 end
