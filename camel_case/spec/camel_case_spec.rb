@@ -28,6 +28,9 @@ describe 'CamelCase' do
       expect(@subject.convert('dressing___down')).to eq 'dressingDown'
     end
 
+    # This test took much longer to go green
+    # I realize that the solution to the problem
+    # has been overcomplicated, how to simplify here
     it 'eslint__global__goat___mustache___path -> eslintGlobalGoatMustachePath' do
       input = 'eslint__global__goat___mustache___path'
       output = 'eslintGlobalGoatMustachePath'
@@ -55,4 +58,36 @@ describe 'CamelCase' do
     end
   end
 
+  context 'must convert if - in the middle' do
+    it 'super-mario -> superMario' do
+      expect(@subject.convert('super-mario')).to eq 'superMario'
+    end
+
+    it 'eslint-path -> eslintPath' do
+      expect(@subject.convert('eslint-path')).to eq 'eslintPath'
+    end
+
+    it 'eslint-global-path -> eslintGlobalPath' do
+      expect(@subject.convert('eslint-global-path')).to eq 'eslintGlobalPath'
+    end
+
+    it 'goat--mustache -> goatMustache' do
+      expect(@subject.convert('goat--mustache')).to eq 'goatMustache'
+    end
+
+    # Regex evolved to handle this seperately here
+    # http://rubular.com/r/g3pUxyd306
+    it 'dressing---down -> dressingDown' do
+      expect(@subject.convert('dressing---down')).to eq 'dressingDown'
+    end
+
+    # This test took much longer to go green
+    # I realize that the solution to the problem
+    # has been overcomplicated, how to simplify here
+    it 'eslint--global--goat---mustache---path -> eslintGlobalGoatMustachePath' do
+      input = 'eslint--global--goat---mustache---path'
+      output = 'eslintGlobalGoatMustachePath'
+      expect(@subject.convert(input)).to eq output
+    end
+  end
 end
