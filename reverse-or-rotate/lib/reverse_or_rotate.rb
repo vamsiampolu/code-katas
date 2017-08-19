@@ -27,7 +27,6 @@ class RevRot
   def rotate_left(num_list)
     return if num_list.nil? or !num_list.kind_of?(Array) or (num_list.kind_of?(Array) and !num_list.all? {|num| num.is_a?(Integer)})
     head = num_list[0]
-    puts('HEAD', head)
     tail = num_list.slice(1, num_list.length - 1)
     result = []
     result = (result + tail)
@@ -36,6 +35,7 @@ class RevRot
   end
 
   def main(str, sz)
+    return '' if str.length < sz or sz == 0
     str_chunks = break_input(str, sz)
     num_chunks = str_chunks.map{|chunk| convert_chunk_to_numbers(chunk)}
     cubes = num_chunks.map {|num_list| sum_of_cubes(num_list) }

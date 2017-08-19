@@ -113,12 +113,45 @@ describe 'Reverse or Rotate' do
   end
 
   context 'main' do
+    # All tests here are from problem description in codewars
     it 'str is 123123 and sz is 3 -> 321321' do
       expect(@revRot.main('123123', 3)).to eq '321321'
     end
 
     it 'str is 66443875, sz is 4 -> 44668753' do
-      expect(@revRot.main('66443875', 4)).to eq "44668753"
+      expect(@revRot.main('66443875', 4)).to eq '44668753'
+    end
+
+    # I solved the problem before writing this test, the
+    # rest of the tests did not go through RED -> GREEN -> REFACTOR, instead they just went green
+    it 'str is 123456987653, sz is 6 -> 234561356789' do
+      expect(@revRot.main('123456987653', 6)).to eq '234561356789'
+    end
+
+    it 'str is 66443875, sz is 8 -> 64438756' do
+      expect(@revRot.main('66443875', 8)).to eq '64438756'
+    end
+
+    it 'str is 664438769, sz is 8 -> 67834466' do
+      expect(@revRot.main('664438769', 8)).to eq '67834466'
+    end
+
+    it 'str is 123456779, sz is 8 -> 23456771' do
+      expect(@revRot.main('123456779', 8)).to eq '23456771'
+    end
+
+    # Finally a failing test
+    it 'str is "", sz is 8 -> ""' do
+      expect(@revRot.main('', 8)).to eq ''
+    end
+
+    it 'str is "123456779", sz is 0 -> ""' do
+      expect(@revRot.main('123456779', 0)).to eq ''
+    end
+
+    # Just went green, no RED state
+    it 'str is 563000655734469485, sz is 4 -> 0365065073456944' do
+      expect(@revRot.main('563000655734469485', 4)).to eq '0365065073456944'
     end
   end
 
