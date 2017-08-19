@@ -35,4 +35,21 @@ class RevRot
     result
   end
 
+  def main(str, sz)
+    str_chunks = break_input(str, sz)
+    num_chunks = str_chunks.map{|chunk| convert_chunk_to_numbers(chunk)}
+    cubes = num_chunks.map {|num_list| sum_of_cubes(num_list) }
+    result = ''
+    cubes.each_with_index do |c,i|
+      if c % 2 == 0
+        result = result + str_chunks[i].reverse
+      else
+        num_list_rot = rotate_left(num_chunks[i])
+        reversed = num_list_rot.reduce('') { |acc, num| acc + "#{num}" }
+        result = result + reversed
+      end
+    end
+    result
+  end
+
 end

@@ -112,4 +112,14 @@ describe 'Reverse or Rotate' do
     end
   end
 
+  context 'main' do
+    it 'str is 123123 and sz is 3 -> 321321' do
+      expect(@revRot.main('123123', 3)).to eq '321321'
+    end
+
+    it 'str is 66443875, sz is 4 -> 44668753' do
+      expect(@revRot.main('66443875', 4)).to eq "44668753"
+    end
+  end
+
 end
