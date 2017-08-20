@@ -1,9 +1,9 @@
 class CamelCase
   def convert(str)
     result = str
-    hasMatched = str =~ /^(?![_-])(\w+)[_-](\w+)(?<![_-])$/
+    hasMatched = str =~ /^(?![_-])([A-Za-z_-]+)[_-](\w+)(?<![_-])$/
     if !hasMatched.nil?
-      matches = str.scan(/^(?![_-])(\w+)[_-](\w+)(?<![_-])$/)
+      matches = str.scan(/^(?![_-])([A-Za-z_-]+)[_-](\w+)(?<![_-])$/)
       matches.each do |groups| 
         pre = convert(groups[0])
         preHasMatched = pre =~ /([A-Za-z0-9]+)[_-]*/
