@@ -26,6 +26,19 @@ describe 'TripleTrouble' do
         num2 = 12356337
         expect(@subject.main(num1, num2)).to eq 1
       end
+
+      it 'returns 1 for 333444, 124435' do
+        num1 = 333444
+        num2 = 124435
+        expect(@subject.main(num1, num2)).to eq 1
+      end
+
+      #NOT FAILING TEST
+      it 'returns 1 for 451999277, 41177722899' do
+        num1 = 451999277
+        num2 = 41177722899
+        expect(@subject.main(num1, num2)).to eq 1
+      end
     end
 
     context 'returns 0 if conditions are not met' do
@@ -34,11 +47,26 @@ describe 'TripleTrouble' do
         num2 = 77
         expect(@subject.main(num1, num2)).to eq 0
       end
-    end
-  end
 
-  # Decided to start writing a new method that will solve the problem instead of refactoring
-  describe '#identify_triple' do
+      # NOT FAILING TESTS
+      it 'returns 0 for 12345, 12345' do
+        num1 = 12345
+        num2 = 12345
+        expect(@subject.main(num1, num2)).to eq 0
+      end
+
+      it 'returns 0 for hello, goodbye' do
+        num1 = 'hello'
+        num2 = 'goodbye'
+        expect(@subject.main(num1, num2)).to eq 0
+      end
+
+      it 'returns 0 for nil, nil' do
+        num1 = nil
+        num2 = nil
+        expect(@subject.main(num1, num2)).to eq 0
+      end
+    end
   end
 end
 

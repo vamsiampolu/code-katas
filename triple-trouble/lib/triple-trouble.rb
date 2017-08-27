@@ -1,6 +1,16 @@
 class TripleTrouble
   def main(num1, num2)
-    return 1 if (num1 == 999 and num2 == 99) or (num1 == 666 and num2 == 166) or (num1 == 2345333 and num2 == 12356337)
+    num1_str = num1.to_s
+    num2_str = num2.to_s
+    has_triple = num1_str =~ /(\d)\1{2,}/
+    return 0 unless has_triple
+    num1_triples = num1_str.scan(/(\d)\1{2,}/).flatten
+    if num1_triples.length > 0
+      num1_triples.each do |t|
+        has_double = num2_str =~ /(#{t})\1{1,}/
+        return 1 if has_double
+      end
+    end
     0
   end
 end
