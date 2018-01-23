@@ -14,18 +14,17 @@ object StringCalculator {
     if (numbers == "") {
       Right(0)
     } else if(numbers.contains(',')) {
-      val numList = numbers.split(',')
-      numList
-        .traverse(x => {
+      val numList = numbers.split(',').toList
+      numList.traverse(x => {
           try {
               Right(x.toInt)
           } catch {
             case e: NumberFormatException => Left(0)
           }
         })
-        .foldLeft(0)(_ + _)
+        .fold(???)
     } else if(numbers.contains('\n')) {
-      val numList = numbers.split('\n')
+      val numList = numbers.split('\n').toList
       numList
         .traverse(x => {
           try {
@@ -34,7 +33,7 @@ object StringCalculator {
             case e: NumberFormatException => Left(0)
           }
         })
-        .foldLeft(0)(_ + _)
+        .fold(???)
     } else {
       Right(numbers.toInt)
     }
