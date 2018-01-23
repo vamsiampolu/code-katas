@@ -5,8 +5,10 @@ lazy val root = (project in file(".")).
     inThisBuild(List(
       organization := "com.example",
       scalaVersion := "2.12.4",
+      scalacOptions += "-Ypartial-unification",
       version      := "0.1.0-SNAPSHOT"
     )),
     name := "Hello",
+    libraryDependencies += cats
     libraryDependencies += scalaTest % Test
   )
