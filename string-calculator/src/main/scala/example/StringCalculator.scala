@@ -1,54 +1,41 @@
 package example
 
-// import java.lang.NumberFormatException
-// import cats.Semigroup
 import cats.implicits._
 
 object StringCalculator {
-  def sumList(numList: List[String]): Int = {
-    numList
-      .map {x => x.toInt }
-      .foldLeft(0)(_ + _)
-  }
 
   def add(numbers: String) = {
-    if (numbers == "") {
-      Right(0)
-    } else if(numbers.contains(',')) {
-      val numList = numbers.split(',').toList
-      val l2 = numList.traverse(x => {
-          try {
-              Right(x.toInt)
-          } catch {
-            case _: NumberFormatException => Left(0)
-          }
-        })
-        .fold(x => x, x => x)
-      l2 match {
-        case Left(x) => Left(0)
-        case Right(xs:List[Int]) => {
-          Right(xs.foldLeft(0)(_ + _))
-        }
-      }
+    var delimiter: Option[Char] = None
+     if(numbers.contains(',')) {
+       delimiter = Some(',')
     } else if(numbers.contains('\n')) {
-      val numList = numbers.split('\n').toList
-      val l2 = numList
-        .traverse(x => {
-          try {
+      delimiter = Some('\n')
+    }
+
+    delimiter match {
+      case Some(x) => {
+        numbers
+          .split(x)
+          .toList
+          .traverse(x => {
+            try {
               Right(x.toInt)
-          } catch {
-            case e: NumberFormatException => Left(0)
-          }
-        })
-      l2 match {
-        case Left(x:Int) => Left(0)
-        case Right(xs: List[Int]) => {
-          println(xs.foldLeft(0)(_ + _))
-          Right(xs.foldLeft(0)(_ + _))
+            } catch {
+              case e: NumberFormatException => Left(0)
+            }
+          })
+          .map(xs => {
+            xs.foldLeft(0)(_ + _)
+          })
+      }
+
+      case None => {
+        if (numbers == "") {
+          Right(0)
+        } else {
+          Right(numbers.toInt)
         }
       }
-    } else {
-      Right(numbers.toInt)
     }
   }
 }
