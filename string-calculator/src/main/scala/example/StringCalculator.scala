@@ -4,12 +4,28 @@ import cats.implicits._
 
 object StringCalculator {
 
-  def add(numbers: String) = {
+  def add(input: String) = {
     var delimiter: Option[Char] = None
-     if(numbers.contains(',')) {
-       delimiter = Some(',')
-    } else if(numbers.contains('\n')) {
-      delimiter = Some('\n')
+    var numbers: String = input
+    val pattern = "//(.{1})".r
+
+    val delimiterStr:Option[String] = (pattern findFirstIn input)
+    delimiterStr match {
+      case Some(x) => {
+        numbers = input.slice(3, input.length)
+        delimiter = delimiterStr
+          .map(xs => {
+            xs.last
+          })
+      }
+
+      case None => {
+        if(numbers.contains(',')) {
+          delimiter = Some(',')
+        } else if(numbers.contains('\n')) {
+          delimiter = Some('\n')
+        }
+      }
     }
 
     delimiter match {
